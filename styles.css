@@ -1,0 +1,38 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --cell-border-color: hsl(0, 0, 0%);
+}
+.h1__div {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+body {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+}
+.signs__div {
+  display: flex;
+}
+
+.signs__div > * {
+  width: 50%;
+}
+.gameboard__div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  grid-template-rows: repeat(3, minmax(100px, 1fr));
+}
+
+.field {
+  background: hsl(0, 0%, 98%);
+  padding: 0;
+}

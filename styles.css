@@ -6,13 +6,12 @@
   box-sizing: border-box;
 }
 
-:root {
-  --cell-border-color: hsl(0, 0, 0%);
-}
 .h1__div {
   text-align: center;
   text-transform: uppercase;
   margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 body {
   display: grid;
@@ -21,18 +20,52 @@ body {
 }
 .signs__div {
   display: flex;
+  gap: 0.5rem;
 }
 
 .signs__div > * {
   width: 50%;
+  background: hsl(0, 0%, 98%);
+  border: 1px solid hsl(0, 0%, 70%);
+  border-radius: 4px;
+  padding: 0.75rem;
+}
+
+.signs__div > *:hover {
+  background: hsl(0, 0%, 95%);
+}
+main {
+  margin: 1rem 0 0 0;
 }
 .gameboard__div {
   display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
-  grid-template-rows: repeat(3, minmax(100px, 1fr));
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  grid-template-rows: repeat(3, minmax(150px, 1fr));
 }
 
 .field {
   background: hsl(0, 0%, 98%);
   padding: 0;
+  outline: 1px solid hsl(0, 0%, 70%);
+  border: none;
+}
+
+.field:hover {
+  background: hsl(0, 0%, 95%);
+}
+
+.reset__div {
+  margin: 1rem 0 0 0;
+}
+
+.reset__div > * {
+  width: 100%;
+  padding: 1rem 2rem;
+  border: 1px solid hsl(0, 0%, 70%);
+  border-radius: 4px;
+  background: hsl(0, 0%, 98%);
+}
+
+.reset__div > *:hover {
+  background: hsl(0, 0%, 95%);
 }

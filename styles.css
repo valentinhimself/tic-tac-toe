@@ -48,6 +48,7 @@ main {
   padding: 0;
   outline: 1px solid hsl(0, 0%, 70%);
   border: none;
+  font-size: 3rem;
 }
 
 .field:hover {

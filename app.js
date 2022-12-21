@@ -33,6 +33,8 @@ class TicTacToe {
 
   updateDisplay(cell) {
     cell.textContent = this.playerChoice;
+    if (!this.isOver()) return;
+    gameController.declareWinner();
   }
 
   reset() {
@@ -93,6 +95,9 @@ function GameController() {
   const tickTacFields = document.querySelectorAll('.field');
   const resetBtn = document.querySelector('.reset__btn');
   const signFields = document.querySelectorAll('#cross, #nought');
+  const overlay = document.querySelector('.overlay');
+  const winner = document.querySelector('.winner');
+
   const addPlayerChoiceListener = () => {
     signFields.forEach((signField) => {
       signField.addEventListener('click', () => {
@@ -121,12 +126,24 @@ function GameController() {
     });
   };
 
+  const declareWinner = () => {
+    overlay.classList.add('show');
+    if (tickTac.isOver() === 'X') {
+      winner.textContent = 'X';
+    } else if (tickTac.isOver() === 'O') {
+      winner.textContent = 'O';
+    } else {
+      winner.textContent = "It's a draw!";
+    }
+  };
+
   addPlayerChoiceListener();
   addCellListener();
   addResetListener();
 
   return {
     tickTacFields,
+    declareWinner,
   };
 }
 

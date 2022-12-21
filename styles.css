@@ -41,6 +41,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, minmax(150px, 1fr));
   grid-template-rows: repeat(3, minmax(150px, 1fr));
+  position: relative;
 }
 
 .field {
@@ -69,4 +70,22 @@ main {
 
 .reset__div > *:hover {
   background: hsl(0, 0%, 95%);
+}
+
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  backdrop-filter: blur(6px);
+  scale: 0;
+  z-index: -1;
+  transition: 0.2s all;
+}
+
+.overlay.show {
+  scale: 1;
+  z-index: 0;
 }

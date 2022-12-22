@@ -2,7 +2,7 @@ class TicTacToe {
   constructor(tick, tac) {
     this.tick = tick;
     this.tac = tac;
-    this.tictacArray = Array(9);
+    this.Array = [];
   }
 
   setPlayerChoice(choice) {
@@ -27,7 +27,8 @@ class TicTacToe {
   }
 
   makeMove(cell) {
-    this.tictacArray[Array.from(gameController.tickTacFields).indexOf(cell)] =
+    if (!this.Array[0]) this.Array[0] = null; // debug
+    this.Array[Array.from(gameController.tickTacFields).indexOf(cell)] =
       this.playerChoice;
   }
 
@@ -38,56 +39,35 @@ class TicTacToe {
   }
 
   reset() {
+    gameController.overlay.classList.remove('show');
     this.playerChoice = '';
     gameController.tickTacFields.forEach((field) => (field.textContent = ''));
-    this.tictacArray = Array(9);
+    this.Array.length = 0;
   }
 
   isOver() {
-    console.log(this.tictacArray);
-    if (
-      this.tictacArray[0] === this.tictacArray[1] &&
-      this.tictacArray[0] === this.tictacArray[2]
-    )
-      return this.tictacArray[0];
-    if (
-      this.tictacArray[3] === this.tictacArray[4] &&
-      this.tictacArray[3] === this.tictacArray[5]
-    )
-      return this.tictacArray[3];
-    if (
-      this.tictacArray[6] === this.tictacArray[7] &&
-      this.tictacArray[6] === this.tictacArray[8]
-    )
-      return this.tictacArray[6];
+    // horizonal
+    if (this.Array[0] === this.Array[1] && this.Array[0] === this.Array[2])
+      return this.Array[0];
+    if (this.Array[3] === this.Array[4] && this.Array[4] === this.Array[5])
+      return this.Array[3];
+    if (this.Array[6] === this.Array[7] && this.Array[6] === this.Array[8])
+      return this.Array[6];
 
-    if (
-      this.tictacArray[0] === this.tictacArray[3] &&
-      this.tictacArray[0] === this.tictacArray[6]
-    )
-      return this.tictacArray[0];
+    // diagonal
+    if (this.Array[0] === this.Array[4] && this.Array[0] === this.Array[8])
+      return this.Array[0];
+    if (this.Array[2] === this.Array[4] && this.Array[2] === this.Array[6])
+      return this.Array[2];
 
-    if (
-      this.tictacArray[1] === this.tictacArray[4] &&
-      this.tictacArray[1] === this.tictacArray[7]
-    )
-      return this.tictacArray[1];
-    if (
-      this.tictacArray[2] === this.tictacArray[5] &&
-      this.tictacArray[2] === this.tictacArray[8]
-    )
-      return this.tictacArray[2];
-    if (
-      this.tictacArray[0] === this.tictacArray[4] &&
-      this.tictacArray[0] === this.tictacArray[8]
-    )
-      return this.tictacArray[0];
-    if (
-      this.tictacArray[2] === this.tictacArray[4] &&
-      this.tictacArray[2] === this.tictacArray[6]
-    )
-      return this.tictacArray[2];
-    if (!this.tictacArray.includes(undefined)) return 'Draw';
+    // vertical
+    if (this.Array[0] === this.Array[3] && this.Array[3] === this.Array[6])
+      return this.Array[0];
+    if (this.Array[1] === this.Array[4] && this.Array[4] === this.Array[7])
+      return this.Array[1];
+    if (this.Array[2] === this.Array[5] && this.Array[5] === this.Array[8])
+      return this.Array[2];
+    if (!this.Array.includes(undefined)) return 'Draw';
   }
 }
 
@@ -97,6 +77,7 @@ function GameController() {
   const signFields = document.querySelectorAll('#cross, #nought');
   const overlay = document.querySelector('.overlay');
   const winner = document.querySelector('.winner');
+  const winnerSpan = document.querySelector('.winner__span');
 
   const addPlayerChoiceListener = () => {
     signFields.forEach((signField) => {
@@ -130,18 +111,30 @@ function GameController() {
     overlay.classList.add('show');
     if (tickTac.isOver() === 'X') {
       winner.textContent = 'X';
+      winnerSpan.textContent = 'is the winner';
     } else if (tickTac.isOver() === 'O') {
       winner.textContent = 'O';
+      winnerSpan.textContent = 'is the winner';
     } else {
       winner.textContent = "It's a draw!";
+      winnerSpan.textContent = '';
     }
+  };
+
+  const addOverlayListener = () => {
+    overlay.addEventListener('click', () => {
+      overlay.classList.remove('show');
+      tickTac.reset();
+    });
   };
 
   addPlayerChoiceListener();
   addCellListener();
   addResetListener();
+  addOverlayListener();
 
   return {
+    overlay,
     tickTacFields,
     declareWinner,
   };
@@ -153,29 +146,3 @@ const tickField = document.querySelector('#cross');
 const tacField = document.querySelector('#nought');
 
 const tickTac = new TicTacToe(tickField.textContent, tacField.textContent);
-
-// const tickTacFields = document.querySelectorAll('.field');
-// const resetBtn = document.querySelector('.reset__btn');
-// const signFields = document.querySelectorAll('#cross, #nought');
-
-// signFields.forEach((signField) => {
-//   signField.addEventListener('click', () => {
-//     tickTac.reset();
-//     tickTac.setPlayerChoice(signField.textContent);
-//   });
-// });
-
-// tickTacFields.forEach((tickTacField) => {
-//   tickTacField.addEventListener('click', () => {
-//     if (!tickTac.isCellTaken(tickTacField)) {
-//       tickTac.makeMove(tickTacField);
-//       tickTac.updateDisplay(tickTacField);
-//       tickTac.isOver();
-//       tickTac.takeTurn();
-//     }
-//   });
-// });
-
-// resetBtn.addEventListener('click', () => {
-//   tickTac.reset();
-// });

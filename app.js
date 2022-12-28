@@ -48,14 +48,83 @@ class TicTacToe {
       return;
     }
 
-    const availableArrayIndices = this.getAvailableIndices();
+    this.Array[this.makeChoice()] = this.botChoice;
+  }
 
-    this.randomIndexFromRemaining =
-      availableArrayIndices[
-        Math.floor(Math.random() * availableArrayIndices.length)
-      ];
+  makeChoice() {
+    this.sortedArray = [
+      [
+        [this.Array[0], 0],
+        [this.Array[1], 1],
+        [this.Array[2], 2],
+      ],
+      [
+        [this.Array[3], 3],
+        [this.Array[4], 4],
+        [this.Array[5], 5],
+      ],
+      [
+        [this.Array[6], 6],
+        [this.Array[7], 7],
+        [this.Array[8], 8],
+      ],
+      [
+        [this.Array[0], 0],
+        [this.Array[4], 4],
+        [this.Array[8], 8],
+      ],
+      [
+        [this.Array[2], 2],
+        [this.Array[4], 4],
+        [this.Array[6], 6],
+      ],
+      [
+        [this.Array[0], 0],
+        [this.Array[3], 3],
+        [this.Array[6], 6],
+      ],
+      [
+        [this.Array[1], 1],
+        [this.Array[4], 4],
+        [this.Array[7], 7],
+      ],
+      [
+        [this.Array[2], 2],
+        [this.Array[5], 5],
+        [this.Array[8], 8],
+      ],
+    ];
+    let i = 0;
+    while (i < this.sortedArray.length) {
+      if (
+        this.sortedArray[i][0][0] == undefined ||
+        this.sortedArray[i][1][0] == undefined ||
+        this.sortedArray[i][2][0] == undefined
+      ) {
+        if (
+          this.sortedArray[i][0][0] === this.sortedArray[i][2][0] &&
+          this.sortedArray[i][0][0] != undefined
+        ) {
+          return this.sortedArray[i][1][1];
+        }
+        if (
+          this.sortedArray[i][1][0] === this.sortedArray[i][2][0] &&
+          this.sortedArray[i][1][0] != undefined
+        )
+          return this.sortedArray[i][0][1];
+        if (
+          this.sortedArray[i][0][0] === this.sortedArray[i][1][0] &&
+          this.sortedArray[i][0][0] != undefined
+        ) {
+          return this.sortedArray[i][2][1];
+        }
+      }
 
-    this.Array[this.randomIndexFromRemaining] = this.botChoice;
+      i++;
+    }
+    return this.getAvailableIndices()[
+      Math.floor(Math.random() * this.getAvailableIndices().length)
+    ];
   }
 
   getAvailableIndices() {
